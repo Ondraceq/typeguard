@@ -4,6 +4,7 @@ import collections.abc
 import inspect
 import sys
 import types
+import typing
 import warnings
 from enum import Enum
 from inspect import Parameter, isclass, isfunction
@@ -440,7 +441,7 @@ def check_class(
     args: tuple[Any, ...],
     memo: TypeCheckMemo,
 ) -> None:
-    if not isclass(value):
+    if not isclass(value) and not isinstance(value, typing._GenericAlias):
         raise TypeCheckError("is not a class")
 
     # Needed on Python 3.7+
